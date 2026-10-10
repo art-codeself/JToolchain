@@ -1,0 +1,38 @@
+[package]
+name = "jtc"
+version = "0.1.0"
+edition = "2021"
+description = "JToolchain CLI - version manager for JDK, Maven and Gradle"
+license = "MIT"
+authors = ["zero"]
+
+[[bin]]
+name = "jtc"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive", "wrap_help"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+thiserror = "1"
+dirs = "5"
+# 轻量同步 HTTP，默认 rustls，无需 tokio
+ureq = { version = "2.10", features = ["json", "charset"] }
+zip = { version = "2", default-features = false, features = ["deflate", "bzip2", "zstd"] }
+flate2 = "1"
+tar = "0.4"
+indicatif = "0.17"
+colored = "2"
+semver = "1"
+regex = "1"
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
